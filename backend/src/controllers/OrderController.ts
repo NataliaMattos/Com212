@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import fs from "fs";
 import { getManager } from "typeorm";
 import { connect } from "../database/index";
+import { uuid } from 'uuidv4';
 require("dotenv").config();
 
 connect();
@@ -13,33 +14,37 @@ export class OrderController {
     try {
       console.log("entrou insertFiles");
       const body = request.body;
+      const id = uuid();
       console.log(body);
       const extension = body.file.split(";")[0].split("/")[1];
+      const base64Data = body.file.split(`base64,`)[1];
+
+        fs.writeFile(
+        `D:\\com242\\media\\${id}.${extension}`,
+        base64Data,
+        "base64",
+        function (err) {
+          console.log(err);
+        }
+      );
 
       await manager
         .createQueryBuilder()
         .insert()
         .into("public.demandas")
         .values({
-          id: `${body.fileId}`,
+          id: `${id}`,
           filename: body.fileName,
           category: body.category,
           extension: extension,
-          path: body.file,
+          path: base64Data,
           user_id: body.user_id,
         })
         .execute();
 
       const demandas = await manager.createQueryBuilder().select('*').from('public.demandas', 'demandas').getRawMany();
 
-      // fs.writeFile(
-      //   `D:\\com242\\media\\${body.fileId}.${extension}`,
-      //   base64Data,
-      //   "base64",
-      //   function (err) {
-      //     console.log(err);
-      //   }
-      // );
+
 
       response.status(200).send(demandas);
     } catch (error) {
@@ -84,14 +89,14 @@ export class OrderController {
       const base64Data = body.file.split(`base64,`)[1];
 
 
-
       await manager
         .createQueryBuilder()
-        .update()
+        .update('public.demandas')
         .set({
-          ...body,
+          filename: body.fileName,
+          category: body.category,
           path: base64Data,
-          extension
+          extension: extension
         })
         .where(`id = '${id}'`)
         .execute();
@@ -100,6 +105,7 @@ export class OrderController {
         message: 'Demanda editada com sucesso!'
       });
     } catch (error) {
+      console.log(error);
       return response.status(400).send({
         error: "Houve um erro na aplicação",
         message: error,
@@ -114,8 +120,8 @@ export class OrderController {
       const files = await manager
         .createQueryBuilder()
         .select()
-        .from("demandas", "demandas")
-        .where('user_id = :userId',{userId: request.query.userId})
+        .from("public.demandas", "demandas")
+        // .where('user_id = :userId',{userId: request.query.userId})
         .getRawMany();
 
       response.status(200).send(files);

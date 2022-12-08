@@ -2,6 +2,7 @@ import AWS from "aws-sdk";
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
 import { connect } from "../database/index";
+import { uuid } from 'uuidv4';
 require("dotenv").config();
 
 connect();
@@ -10,13 +11,18 @@ const manager = getManager();
 export class UserController {
   async createUser(request: Request, response: Response) {
     try {
+      const id = uuid();
       const body = request.body;
       await manager
         .createQueryBuilder()
         .insert()
         .into("public.users")
         .values({
-          ...body,
+          id: id,
+          name: body.name,
+          lastname: body.lastname,
+          email: body.email,
+          password: body.password
         })
         .execute();
 

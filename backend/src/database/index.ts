@@ -9,7 +9,7 @@ export async function connect() {
         port: parseInt(process.env.DATABASE_PORT),
         username: 'postgres',
         password: process.env.DATABASE_PASS,
-        database: 'media',
+        database: 'demandas',
         logging: true,
         entities: ['src/database/models/*.ts']
      });
