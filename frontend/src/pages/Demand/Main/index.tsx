@@ -45,10 +45,28 @@ function DemandMain() {
       });
   }, [refresh]);
 
-  const findDownload = (path: string) => {
-    console.log("path");
-  };
-
+  // const findDownload = (id: number) => {
+  //   axios
+  //     .post("http://localhost:3000/notifyRequest", { fileId: id })
+  //     .then(() => {
+  //       toast({
+  //         title: "Download feito com sucesso",
+  //         description: "Download feita com sucesso na pasta do computador.",
+  //         status: "success",
+  //         duration: 1000,
+  //         isClosable: true,
+  //       });
+  //     })
+  //     .catch(() => {
+  //       toast({
+  //         title: "Erro desconhecido",
+  //         description: "Verifique as informações e tente novamente",
+  //         status: "error",
+  //         duration: 2000,
+  //         isClosable: true,
+  //       });
+  //     });
+  // };
   return (
     <>
       <Flex flexDirection="column" w="100%" marginTop={10}>
@@ -63,7 +81,7 @@ function DemandMain() {
                   <Th>Titulo</Th>
                   <Th>categoria</Th>
                   <Th>Extensao</Th>
-                  <Th>Download</Th>
+                  {/* <Th>Download</Th> */}
                   <Th>Ações</Th>
                 </Tr>
               </Thead>
@@ -74,16 +92,15 @@ function DemandMain() {
                       <Td>{elem.filename}</Td>
                       <Td>{elem.category}</Td>
                       <Td>{elem.extension}</Td>
-                      <Td>
-                        <Button>
-                          <a
-                            download={elem.filename + "." + elem.extension}
-                            href={elem.path}
-                          >
-                            Download
-                          </a>
-                        </Button>
-                      </Td>
+                      {/* <Td>
+                        <Button
+                          onClick={() => {
+                            findDownload(elem.id);
+                          }}
+                        >
+                          Download
+                        </Button> */}
+                      {/* </Td> */}
                       <Td>
                         <Box display="flex" justifyContent="space-evenly">
                           <CreateModal data={elem} />

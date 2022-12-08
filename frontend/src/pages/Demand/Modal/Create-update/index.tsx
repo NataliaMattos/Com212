@@ -1,7 +1,5 @@
 import {
-  Box,
   Button,
-  Flex,
   FormControl,
   FormLabel,
   Input,
@@ -30,6 +28,7 @@ interface Order {
   category: string;
   user_id: string;
   file: string;
+  extension: string;
 }
 
 function CreateModal({ data }: Demand) {
@@ -41,6 +40,7 @@ function CreateModal({ data }: Demand) {
     category: data?.category,
     user_id: data?.user_id,
     file: data?.path,
+    extension: data?.extension,
   });
 
   const [isWaiting, setIsWaiting] = useState(false);
@@ -53,12 +53,13 @@ function CreateModal({ data }: Demand) {
     const userId = localStorage.getItem("userId");
     event.preventDefault();
     axios
-      .patch(`order/${id}`, {
+      .patch(`http://localhost:3000/order/${id}`, {
         id: unique_id,
         category: order.category,
         filename: order.fileName,
         file: order.file,
         user_id: userId,
+        extension: order.extension,
       })
       .then(() => {
         toast({
@@ -152,7 +153,7 @@ function CreateModal({ data }: Demand) {
                 }}
               />
             </FormControl>
-            <FormControl as="fieldset" isRequired>
+            <FormControl as="fieldset">
               <FormLabel as="legend">Arquivo</FormLabel>
               <Input
                 multiple

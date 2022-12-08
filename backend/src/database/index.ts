@@ -11,6 +11,7 @@ export async function connect() {
         password: process.env.DATABASE_PASS,
         database: 'demandas',
         logging: true,
+
         entities: ['src/database/models/*.ts']
      });
 

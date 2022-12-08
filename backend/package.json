@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --transpile-only src/server.ts",
-    "typeorm": "ts-node-dev node_modules/.bin/typeorm"
+    "typeorm": "ts-node-dev node_modules/.bin/typeorm","sync": "typeorm schema: sync"
   },
   "dependencies": {
     "aws-sdk": "^2.1260.0",
