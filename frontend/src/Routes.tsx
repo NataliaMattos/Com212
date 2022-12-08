@@ -1,10 +1,9 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
+import { Route, Routes } from "react-router-dom";
 import NavBar from "./componentes/navbar";
-import Order from "./pages/Order";
+import { AccountProvider } from "./contexts/login";
+import Dashboard from "./pages/Demand";
 import Login from "./pages/Login";
-import { AccountContext, AccountProvider } from "./contexts/login";
-import { useContext, useEffect } from "react";
+import Order from "./pages/Order";
 import { Users } from "./pages/Users";
 
 //FUNÇÃO QUE VERIFICA AS ROTAS PRIVADAS
