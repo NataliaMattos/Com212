@@ -74,12 +74,8 @@ function DemandMain() {
                       <Td>{elem.category}</Td>
                       <Td>{elem.extension}</Td>
                       <Td>
-                        <Button
-                          onClick={() => {
-                            findDownload(elem.path);
-                          }}
-                        >
-                          Download
+                        <Button>
+                          <a download={elem.filename+"."+elem.extension} href={elem.path}>Download</a>
                         </Button>
                       </Td>
                       <Td>
