@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Table,
   Thead,
@@ -17,6 +17,7 @@ import {
 import axios from "axios";
 import DeleteModal from "../Modal/Delete";
 import CreateModal from "../Modal/Create-update";
+import { DemandContext } from "../../../contexts/demand";
 
 export interface Files {
   filename: string;
@@ -31,6 +32,7 @@ function DemandMain() {
     localStorage.setItem("userId" , "aa")
   const [files, setFiles] = useState<Files[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { refresh } = useContext(DemandContext);
   const toast = useToast();
 
   useEffect(() => {
@@ -40,7 +42,7 @@ function DemandMain() {
       setFiles(response.data);
       setIsLoading(true);
     });
-  }, []);
+  }, [refresh]);
 
   const findDownload = (path: string) => {
     console.log("path");

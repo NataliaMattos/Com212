@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react'
 import { UserContext } from '../../../../contexts/user';
 import axios from 'axios';
+import { DemandContext } from '../../../../contexts/demand';
 interface dateTable{
   user: string;
   id: number;
@@ -29,8 +30,7 @@ function DeleteModal({ user, id}: dateTable) {
   const [conta, setConta] = useState('')
   const toast = useToast()
 
-  const { setRefresh } = useContext(UserContext)
-  const { refresh } = useContext(UserContext)
+  const { setRefresh, refresh } = useContext(DemandContext)
 
   const handleDelete = (event: FormEvent) => {
     event.preventDefault();

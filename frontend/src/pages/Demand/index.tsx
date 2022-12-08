@@ -13,6 +13,7 @@ import {
   Skeleton,
   Button,
   useToast,
+  Heading,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -110,3 +111,21 @@ function Dashboard() {
   );
 }
 export default Dashboard;
+import MainBlacklist from "./Main";
+import React from "react";
+import DemandMain from "./Main";
+import { DemandProvider } from "../../contexts/demand";
+
+export const Demand = () => {
+
+  return (
+    <>
+      <Box margin='0 auto' padding={'2rem'}>
+        <Heading title='Cadastro Blacklist' />
+        <DemandProvider>
+          <DemandMain/>
+        </DemandProvider>
+      </Box>
+    </>
+  );
+};
