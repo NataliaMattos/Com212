@@ -1,17 +1,17 @@
-import { ReactNode, useContext } from "react";
+import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Flex,
   HStack,
-  Link,
   IconButton,
-  useDisclosure,
-  useColorModeValue,
+  Link,
   Stack,
-  Button,
+  useColorModeValue,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { AccountContext } from "../../contexts/login";
+import { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Links = ["Dashboard", "Order", "Users", "Demand"];
 
@@ -32,7 +32,15 @@ const NavLink = ({ to, children }: { to: any; children: ReactNode }) => (
 
 export default function NavBar({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setIsLogin} = useContext(AccountContext); 
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    navigate("/", {
+      replace: true,
+    });
+  };
+
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -57,7 +65,13 @@ export default function NavBar({ children }: { children: ReactNode }) {
               ))}
             </HStack>
           </HStack>
-          <Button onClick={() => {setIsLogin(2)}}>Sair</Button>
+          <Button
+            onClick={() => {
+              handleLogout();
+            }}
+          >
+            Sair
+          </Button>
         </Flex>
 
         {isOpen ? (

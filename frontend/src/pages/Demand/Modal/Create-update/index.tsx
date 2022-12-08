@@ -6,18 +6,12 @@ import {
   FormLabel,
   Input,
   Modal,
-  ModalBody,
-  ModalCloseButton,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
   Radio,
   RadioGroup,
   SimpleGrid,
   Spinner,
-  Stack,
-  Textarea,
   useColorModeValue,
   useDisclosure,
   useToast,
@@ -28,8 +22,7 @@ import { FiEdit } from "react-icons/fi";
 import { v4 as uuid } from "uuid";
 import { DemandContext } from "../../../../contexts/demand";
 
-
-interface dateTable {
+interface DateTable {
   filename: string;
   id: number;
   extension: string;
@@ -59,18 +52,17 @@ function CreateModal(data: any) {
   const [isWaiting, setIsWaiting] = useState(false);
   const { setRefresh, refresh } = useContext(DemandContext);
   const toast = useToast();
-  let unique_id = "";
 
   const handleSubmit = (event: FormEvent) => {
     setIsWaiting(true);
-    unique_id = uuid();
-    const userId = localStorage.getItem("UserId");
+    const unique_id = uuid();
+    const userId = localStorage.getItem("userId");
     event.preventDefault();
     axios
-      .put(`order/${id}`, {
-        fileId: unique_id,
+      .patch(`order/${id}`, {
+        id: unique_id,
         category: order.category,
-        fileName: order.fileName,
+        filename: order.fileName,
         file: order.file,
         user_id: userId,
       })
@@ -101,7 +93,6 @@ function CreateModal(data: any) {
   const closeModal = () => {
     onClose();
   };
-
 
   function getBase64(file: any, cb: (result: any) => void) {
     let reader = new FileReader();
@@ -136,7 +127,7 @@ function CreateModal(data: any) {
           <form onSubmit={handleSubmit} autoComplete="nope">
             <Flex flexDirection="column" w="100%" marginTop={10}>
               <Box margin="0 auto">
-                  Upload
+                Upload
                 <SimpleGrid width={"50vw"} mt={"10px"} mb={"40px"}>
                   <br></br>
                   <br></br>

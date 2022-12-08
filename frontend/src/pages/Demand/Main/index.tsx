@@ -1,23 +1,22 @@
-import { useContext, useEffect, useState } from "react";
 import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Flex,
-  Text,
   Box,
-  Stack,
-  Skeleton,
   Button,
-  useToast,
+  Flex,
+  Skeleton,
+  Stack,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
 } from "@chakra-ui/react";
 import axios from "axios";
-import DeleteModal from "../Modal/Delete";
-import CreateModal from "../Modal/Create-update";
+import { useContext, useEffect, useState } from "react";
 import { DemandContext } from "../../../contexts/demand";
+import CreateModal from "../Modal/Create-update";
+import DeleteModal from "../Modal/Delete";
 
 export interface Files {
   filename: string;
@@ -29,19 +28,20 @@ export interface Files {
 }
 
 function DemandMain() {
-    localStorage.setItem("userId" , "aa")
   const [files, setFiles] = useState<Files[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { refresh } = useContext(DemandContext);
-  const toast = useToast();
 
   useEffect(() => {
-    const userId = localStorage.getItem("UserId");
+    const userId = localStorage.getItem("userId");
     setIsLoading(false);
-    axios.get("http://localhost:3000/orders", {params: {userId}}).then((response) => {
-      setFiles(response.data);
-      setIsLoading(true);
-    });
+    axios
+      .get("http://localhost:3000/orders", { params: { userId } })
+      .then((response) => {
+        console.log(response);
+        setFiles(response.data);
+        setIsLoading(true);
+      });
   }, [refresh]);
 
   const findDownload = (path: string) => {
@@ -68,6 +68,7 @@ function DemandMain() {
               </Thead>
               <Tbody>
                 {files.map((elem: Files, i: number) => {
+                  console.log(elem);
                   return (
                     <Tr key={i}>
                       <Td>{elem.filename}</Td>
@@ -83,9 +84,9 @@ function DemandMain() {
                         </Button>
                       </Td>
                       <Td>
-                        <Box display='flex' justifyContent='space-evenly'>
-                            <CreateModal data={elem} />
-                            <DeleteModal user={elem.filename} id={elem.id} />
+                        <Box display="flex" justifyContent="space-evenly">
+                          <CreateModal data={elem} />
+                          <DeleteModal user={elem.filename} id={elem.id} />
                         </Box>
                       </Td>
                     </Tr>

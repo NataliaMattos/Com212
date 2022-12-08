@@ -1,14 +1,8 @@
-import { connect } from "../database/index";
-import { Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
-import fs from "fs";
-import path from "path";
 import AWS from "aws-sdk";
-const s3 = new AWS.S3({ signatureVersion: "v4" });
-import { getConnectionManager, getManager, getConnection } from "typeorm";
-import axios from "axios";
+import { Request, Response } from "express";
+import { getManager } from "typeorm";
+import { connect } from "../database/index";
 require("dotenv").config();
-import moment from "moment-timezone";
 
 connect();
 const manager = getManager();
@@ -40,13 +34,14 @@ export class UserController {
   async editUser(request: Request, response: Response){
     try {
         const body = request.body;
-        const id = request.params.id;
+        const { id } = request.params;
         await manager
           .createQueryBuilder()
           .update('public.users')
           .set({
-            body,
+            ...body,
           })
+          .where('id = :id', { id })
           .execute();
   
           response.status(200).send({
@@ -67,7 +62,7 @@ export class UserController {
           .createQueryBuilder()
           .delete()
           .from('public.users')
-          .where(`id = ${id}`)
+          .where(`id = :id`, { id })
           .execute();
   
           response.status(200).send({
@@ -81,7 +76,7 @@ export class UserController {
       }
   }
 
-  async getUsers(response: Response){
+  async getUsers(_:Request, response: Response){
     try {
         const users = await manager
           .createQueryBuilder()

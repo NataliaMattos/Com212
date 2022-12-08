@@ -1,8 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./componentes/navbar";
 import { DemandProvider } from "./contexts/demand";
-import { AccountProvider } from "./contexts/login";
-import Dashboard, { Demand } from "./pages/Demand";
+import { Demand } from "./pages/Demand";
 import Login from "./pages/Login";
 import Order from "./pages/Order";
 import { Users } from "./pages/Users";
@@ -34,29 +33,13 @@ export function Routess() {
   return (
     <Routes>
       {/* Rotas Públicas */}
-      <Route
-        path="/"
-        element={
-          
-            <Login />
-        }
-      />
+      <Route path="/" element={<Login />} />
       <Route
         path="/Users"
         element={
           <NavBar>
             <Users />
           </NavBar>
-        }
-      />
-      <Route
-        path="/Dashboard"
-        element={
-          // <RequireAuth>
-          <NavBar>
-            <Dashboard />
-          </NavBar>
-          // </RequireAuth>
         }
       />
       <Route
@@ -70,17 +53,17 @@ export function Routess() {
       <Route
         path="/login"
         element={
-          <AccountProvider>
+          <NavBar>
             <Login />
-          </AccountProvider>
+          </NavBar>
         }
       />
       <Route
         path="/Demand"
         element={
-          <DemandProvider>
+          <NavBar>
             <Demand />
-          </DemandProvider>
+          </NavBar>
         }
       />
     </Routes>

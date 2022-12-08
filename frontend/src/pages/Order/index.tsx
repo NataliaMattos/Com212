@@ -14,33 +14,31 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import { FormEvent, useState } from "react";
+import { v4 as uuid } from "uuid";
 
-interface Order {
+interface OrderInterface {
   fileName: string;
   category: string;
-  user_id: string;
   file: string;
 }
 
 function Order() {
-  const [order, setOrder] = useState<Order>({
+  const [order, setOrder] = useState<OrderInterface>({
     fileName: "",
     category: "",
-    user_id: "",
     file: "",
   });
   const [isWaiting, setIsWaiting] = useState(false);
 
   const toast = useToast();
-  let unique_id = "";
 
   const handleSubmit = (event: FormEvent) => {
-    const userId = localStorage.getItem("UserId");
+    const userId = localStorage.getItem("userId");
     setIsWaiting(true);
     event.preventDefault();
     axios
-      .post("http://localhost:3000/orders", {
-        fileId: unique_id,
+      .post("http://localhost:3000/order", {
+        fileId: uuid(),
         category: order.category,
         fileName: order.fileName,
         file: order.file,
@@ -63,6 +61,9 @@ function Order() {
           duration: 2000,
           isClosable: true,
         });
+      })
+      .finally(() => {
+        setIsWaiting(false);
       });
   };
 
@@ -91,7 +92,6 @@ function Order() {
       <form onSubmit={handleSubmit} autoComplete="nope">
         <Flex flexDirection="column" w="100%" marginTop={10}>
           <Box margin="0 auto">
-            <p>{unique_id}</p>
             <Text fontSize="3xl" fontWeight={"bold"} mb={"30px"}>
               Upload
             </Text>
@@ -153,7 +153,6 @@ function Order() {
                   </FormControl>
                 </Box>
               </Flex>
-              );
             </SimpleGrid>
             <Button colorScheme="green" mr={3} type="submit" value="submit">
               {isWaiting ? <Spinner color="white.500" /> : <div> Salvar</div>}

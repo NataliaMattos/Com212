@@ -1,4 +1,4 @@
-import React, { FormEvent, useState, useContext } from 'react';
+import React, { FormEvent, useState, useContext } from "react";
 import { FiTrash2 } from "react-icons/fi";
 import {
   Modal,
@@ -15,10 +15,10 @@ import {
   Input,
   useToast,
   Text,
-  useColorModeValue
-} from '@chakra-ui/react'
-import { UserContext } from '../../../contexts/user';
-import axios from 'axios';
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { UserContext } from "../../../contexts/user";
+import axios from "axios";
 
 interface dateTable {
   name: string;
@@ -26,61 +26,72 @@ interface dateTable {
 }
 
 function DeleteModal({ name, id }: dateTable) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [conta, setConta] = useState('')
-  const toast = useToast()
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [conta, setConta] = useState("");
+  const toast = useToast();
 
-  const { refresh, setRefresh } = useContext(UserContext)
+  const { refresh, setRefresh } = useContext(UserContext);
 
   const handleDelete = (event: FormEvent) => {
     event.preventDefault();
 
     try {
-      axios.delete(`user/${id}`).then(() => {
+      axios.delete(`http://localhost:3000/user/${id}`).then(() => {
         toast({
-          title: 'Notícia Excluído',
+          title: "Notícia Excluído",
           description: "Notícia excluída com sucesso.",
-          status: 'success',
+          status: "success",
           duration: 2000,
           isClosable: true,
         });
-        onClose()
+        onClose();
         setRefresh(!refresh);
-      })
-
+      });
     } catch (error) {
       toast({
-        title: 'Erro desconhecido',
+        title: "Erro desconhecido",
         description: "Verifique as informações e tente novamente",
-        status: 'error',
+        status: "error",
         duration: 2000,
         isClosable: true,
-      })
+      });
     }
   };
 
   return (
     <>
-      <Button size="xs" variant="outline"
+      <Button
+        size="xs"
+        variant="outline"
         onClick={() => {
-          onOpen()
-          setConta('')
-        }
-        }>
+          onOpen();
+          setConta("");
+        }}
+      >
         <FiTrash2 />
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent color={useColorModeValue("gray.800", "white")}>
           <form onSubmit={handleDelete}>
-            <ModalHeader color={useColorModeValue("green.500", "white")}>Deseja Excluir Usuário?</ModalHeader>
+            <ModalHeader color={useColorModeValue("green.500", "white")}>
+              Deseja Excluir Usuário?
+            </ModalHeader>
             <ModalCloseButton />
 
             <ModalBody>
               <FormControl>
-                <FormLabel >Essa ação não pode ser desfeita, por favor digite {<Text display="inline" color="red" fontSize='md'>{name + ' '}</Text>}para confirmar.</FormLabel>
+                <FormLabel>
+                  Essa ação não pode ser desfeita, por favor digite{" "}
+                  {
+                    <Text display="inline" color="red" fontSize="md">
+                      {name + " "}
+                    </Text>
+                  }
+                  para confirmar.
+                </FormLabel>
                 <Input
-                  borderColor='100'
+                  borderColor="100"
                   value={conta}
                   onChange={(event) => {
                     setConta(event.target.value);
@@ -90,21 +101,24 @@ function DeleteModal({ name, id }: dateTable) {
             </ModalBody>
 
             <ModalFooter>
-              <Button id="button"
+              <Button
+                id="button"
                 disabled={conta !== name}
-                colorScheme='green'
+                colorScheme="green"
                 mr={3}
-                type='submit'
+                type="submit"
               >
                 Excluir
               </Button>
-              <Button onClick={onClose} colorScheme='red'>Cancelar</Button>
+              <Button onClick={onClose} colorScheme="red">
+                Cancelar
+              </Button>
             </ModalFooter>
           </form>
         </ModalContent>
       </Modal>
     </>
-  )
+  );
 }
 
-export default DeleteModal
+export default DeleteModal;

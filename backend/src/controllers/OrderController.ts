@@ -1,14 +1,10 @@
-import { connect } from "../database/index";
-import { Request, Response } from "express";
-import { v4 as uuidv4 } from "uuid";
-import fs from "fs";
-import path from "path";
 import AWS from "aws-sdk";
-const s3 = new AWS.S3({ signatureVersion: "v4" });
-import { getConnectionManager, getManager, getConnection } from "typeorm";
 import axios from "axios";
+import { Request, Response } from "express";
+import fs from "fs";
+import { getManager } from "typeorm";
+import { connect } from "../database/index";
 require("dotenv").config();
-import moment from "moment-timezone";
 
 connect();
 const manager = getManager();
@@ -25,7 +21,7 @@ export class OrderController {
       await manager
         .createQueryBuilder()
         .insert()
-        .into("public.demanda")
+        .into("public.demandas")
         .values({
           id: `${body.fileId}`,
           filename: body.fileName,
@@ -36,7 +32,7 @@ export class OrderController {
         })
         .execute();
 
-      const demandas = await manager.createQueryBuilder().select('*').from('public.demanda', 'demanda').getRawMany();
+      const demandas = await manager.createQueryBuilder().select('*').from('public.demandas', 'demandas').getRawMany();
 
       fs.writeFile(
         `D:\\com242\\media\\${body.fileId}.${extension}`,
@@ -64,7 +60,7 @@ export class OrderController {
       await manager
         .createQueryBuilder()
         .delete()
-        .from("public.demanda")
+        .from("public.demandas")
         .where(`id = '${id}'`)
         .execute();
 
@@ -86,11 +82,18 @@ export class OrderController {
       const body = request.body;
       console.log(id);
 
+      const extension = body.file.split(";")[0].split("/")[1];
+      const base64Data = body.file.split(`base64,`)[1];
+
+
+
       await manager
         .createQueryBuilder()
         .update()
         .set({
-          body
+          ...body,
+          path: base64Data,
+          extension
         })
         .where(`id = '${id}'`)
         .execute();
@@ -113,7 +116,7 @@ export class OrderController {
       const files = await manager
         .createQueryBuilder()
         .select()
-        .from("demanda", "demanda")
+        .from("demandas", "demandas")
         .where('user_id = :userId',{userId: request.query.userId})
         .getRawMany();
 
@@ -175,7 +178,7 @@ export class OrderController {
           } else {
             await manager
               .createQueryBuilder()
-              .update("demanda")
+              .update("demandas")
               .set({
                 path: body.path,
               })
@@ -219,7 +222,7 @@ export class OrderController {
       const file = await manager
         .createQueryBuilder()
         .select("*")
-        .from("demanda", "demanda")
+        .from("demandas", "demandas")
         .where(`id = '${body.fileId}'`)
         .getRawOne();
 
