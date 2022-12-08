@@ -67,7 +67,7 @@ function CreateModal(data: any) {
     const userId = localStorage.getItem("UserId");
     event.preventDefault();
     axios
-      .put(`Order/${id}`, {
+      .put(`order/${id}`, {
         fileId: unique_id,
         category: order.category,
         fileName: order.fileName,

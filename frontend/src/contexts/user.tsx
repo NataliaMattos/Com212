@@ -31,17 +31,15 @@ interface UserContextData {
 export const UserContext = createContext({} as UserContextData);
 
 export function  UserProvider({ children }:  UserProviderProps) {
-   const [ users, setUsers] = useState<Users[]>([{id: "qqqq", name: "natalia", lastName: "mattos", email: "nat@nat.com", password: "12345"}]);
+   const [ users, setUsers] = useState<Users[]>([]);
    const [ refresh, setRefresh] = useState(false);
    const [isLoading, setIsLoading] = useState(false);
 
   useEffect( () => {
-    setIsLoading(false);
-    // axios.get('/users').then((response) => {
-        // console.log(response.data)
-        // setUsers(response.data);
+    axios.get('/users').then((response) => {
+        setUsers(response.data);
         setIsLoading(true);
-    // })
+    })
   }, [refresh]);
 
 

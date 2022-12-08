@@ -86,7 +86,7 @@ const MainUsers: React.FC<MainUsersProps> = ({
         </Tr>
       </Thead>
       <Tbody>
-        {users.map((elem: Users, i: number) => {
+        {User.map((elem: Users, i: number) => {
           return (
             <Tr key={i}>
               <Td>{elem.name}</Td> 

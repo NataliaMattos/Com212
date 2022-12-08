@@ -36,7 +36,7 @@ function DeleteModal({ user, id}: dateTable) {
     event.preventDefault();
   
   
-        axios.delete(`http://localhost:3000/orders/${id}`)
+        axios.delete(`http://localhost:3000/order/${id}`)
         .then(() => {
           toast({
             title: 'Demanda Excluído',

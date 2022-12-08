@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios';
 import { User, UserContext } from '../../../contexts/user';
+import { uuid } from 'uuidv4';
 
 interface dateTable {
   create: (value: boolean) => void;
@@ -30,13 +31,14 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
   const [password, setPassword] = useState(option === 'create' ? '' : userEdit[0]?.password)
 
   const toast = useToast();
-  let unique_id = "";
 
   const handleSubmit = (event: FormEvent) => {
+    const unique_id = uuid();
     if(option === 'create'){
     event.preventDefault();
     axios
-      .post("http://localhost:3000/insertFiles", {
+      .post("http://localhost:3000/user", {
+        id: unique_id,
         name: name,
         lastName: lastName,
         email: email,
@@ -65,7 +67,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
       });
     } else if (option === 'update') {
       axios
-      .post("http://localhost:3000/insertFiles", {
+      .post(`http://localhost:3000/user/${id}`, {
         name: name,
         lastName: lastName,
         email: email,
@@ -73,8 +75,8 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
       })
       .then(() => {
         toast({
-          title: "Usuário Cadastrado.",
-          description: "Usuário Cadastrado com sucesso.",
+          title: "Usuário Atualizado.",
+          description: "Usuário Atualizado com sucesso.",
           status: "success",
           duration: 2000,
           isClosable: true,
