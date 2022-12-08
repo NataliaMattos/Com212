@@ -10,7 +10,7 @@ import {
   Text,
   Th,
   Thead,
-  Tr,
+  Tr
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
@@ -18,17 +18,19 @@ import { DemandContext } from "../../../contexts/demand";
 import CreateModal from "../Modal/Create-update";
 import DeleteModal from "../Modal/Delete";
 
-export interface Files {
-  filename: string;
-  id: number;
-  extension: string;
-  category: string;
-  path: string;
-  user_id: string;
+export interface Demand {
+  data: {
+    filename: string;
+    id: number;
+    extension: string;
+    category: string;
+    path: string;
+    user_id: string;
+  };
 }
 
 function DemandMain() {
-  const [files, setFiles] = useState<Files[]>([]);
+  const [files, setFiles] = useState<Demand["data"][]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const { refresh } = useContext(DemandContext);
 
@@ -38,7 +40,6 @@ function DemandMain() {
     axios
       .get("http://localhost:3000/orders", { params: { userId } })
       .then((response) => {
-        console.log(response);
         setFiles(response.data);
         setIsLoading(true);
       });
@@ -67,8 +68,7 @@ function DemandMain() {
                 </Tr>
               </Thead>
               <Tbody>
-                {files.map((elem: Files, i: number) => {
-                  console.log(elem);
+                {files.map((elem: Demand['data'], i: number) => {
                   return (
                     <Tr key={i}>
                       <Td>{elem.filename}</Td>
@@ -76,7 +76,12 @@ function DemandMain() {
                       <Td>{elem.extension}</Td>
                       <Td>
                         <Button>
-                          <a download={elem.filename+"."+elem.extension} href={elem.path}>Download</a>
+                          <a
+                            download={elem.filename + "." + elem.extension}
+                            href={elem.path}
+                          >
+                            Download
+                          </a>
                         </Button>
                       </Td>
                       <Td>

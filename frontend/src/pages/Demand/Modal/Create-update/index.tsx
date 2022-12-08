@@ -22,14 +22,7 @@ import { FiEdit } from "react-icons/fi";
 import { v4 as uuid } from "uuid";
 import { DemandContext } from "../../../../contexts/demand";
 
-interface DateTable {
-  filename: string;
-  id: number;
-  extension: string;
-  category: string;
-  path: string;
-  user_id: string;
-}
+import { Demand } from "../../Main";
 
 interface Order {
   fileName: string;
@@ -38,7 +31,7 @@ interface Order {
   file: string;
 }
 
-function CreateModal(data: any) {
+function CreateModal({ data }: Demand) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [id] = useState(data?.id);
@@ -125,79 +118,57 @@ function CreateModal(data: any) {
         <ModalOverlay />
         <ModalContent color={useColorModeValue("gray.800", "white")}>
           <form onSubmit={handleSubmit} autoComplete="nope">
-            <Flex flexDirection="column" w="100%" marginTop={10}>
-              <Box margin="0 auto">
-                Upload
-                <SimpleGrid width={"50vw"} mt={"10px"} mb={"40px"}>
-                  <br></br>
-                  <br></br>
-                  <Box>
-                    <FormControl isRequired>
-                      <FormLabel as="legend">Categorias</FormLabel>
-                      <RadioGroup
-                        defaultValue="filme"
-                        value={order.category}
-                        onChange={(event) => {
-                          saveInputCategory(event);
-                        }}
-                      >
-                        <SimpleGrid minChildWidth={"160px"}>
-                          <Radio value="movie">Filme</Radio>
-                          <Radio value="animation">Animação</Radio>
-                          <Radio value="desenho">Desenho</Radio>
-                          <Radio value="logomarca">Logomarca</Radio>
-                        </SimpleGrid>
-                      </RadioGroup>
-                    </FormControl>
-                  </Box>
-                  <br></br>
-                  <br></br>
-                  <Flex marginBottom={5} alignItems={"center"}>
-                    <Box flex="1">
-                      <FormControl isRequired>
-                        <FormLabel htmlFor="name">Nome</FormLabel>
-                        <Input
-                          id="name"
-                          max-length="300"
-                          borderColor="darkgrey"
-                          border="2px"
-                          type="text"
-                          value={order.fileName}
-                          onChange={(event) => {
-                            saveInputName(event?.target.value);
-                          }}
-                        />
-                      </FormControl>
-                    </Box>
-                    <Box w={"fit-content"}>
-                      <FormControl as="fieldset" isRequired>
-                        <FormLabel as="legend">Arquivo</FormLabel>
-                        <Input
-                          multiple
-                          type="file"
-                          id="name"
-                          max-length="300"
-                          border="none"
-                          onChange={(event) => {
-                            saveInputFile(event?.target.files);
-                          }}
-                          accept="video/*,image/*,audio/*"
-                        />
-                      </FormControl>
-                    </Box>
-                  </Flex>
-                  );
+            <FormControl isRequired>
+              <FormLabel as="legend">Categorias</FormLabel>
+              <RadioGroup
+                defaultValue="filme"
+                value={order.category}
+                onChange={(event) => {
+                  saveInputCategory(event);
+                }}
+              >
+                <SimpleGrid minChildWidth={"160px"}>
+                  <Radio value="movie">Filme</Radio>
+                  <Radio value="animation">Animação</Radio>
+                  <Radio value="desenho">Desenho</Radio>
+                  <Radio value="logomarca">Logomarca</Radio>
                 </SimpleGrid>
-                <Button colorScheme="green" mr={3} type="submit" value="submit">
-                  {isWaiting ? (
-                    <Spinner color="white.500" />
-                  ) : (
-                    <div> Salvar</div>
-                  )}
-                </Button>
-                <Button colorScheme="red">Cancelar</Button>
-              </Box>
-            </Flex>
+              </RadioGroup>
+            </FormControl>
+            <br></br>
+            <br></br>
+            <FormControl isRequired>
+              <FormLabel htmlFor="name">Nome</FormLabel>
+              <Input
+                id="name"
+                max-length="300"
+                borderColor="darkgrey"
+                border="2px"
+                type="text"
+                value={order.fileName}
+                onChange={(event) => {
+                  saveInputName(event?.target.value);
+                }}
+              />
+            </FormControl>
+            <FormControl as="fieldset" isRequired>
+              <FormLabel as="legend">Arquivo</FormLabel>
+              <Input
+                multiple
+                type="file"
+                id="name"
+                max-length="300"
+                border="none"
+                onChange={(event) => {
+                  saveInputFile(event?.target.files);
+                }}
+                accept="video/*,image/*,audio/*"
+              />
+            </FormControl>
+            <Button colorScheme="green" mr={3} type="submit" value="submit">
+              {isWaiting ? <Spinner color="white.500" /> : <div> Salvar</div>}
+            </Button>
+            <Button colorScheme="red">Cancelar</Button>
           </form>
         </ModalContent>
       </Modal>
