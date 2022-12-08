@@ -13,7 +13,7 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { AccountContext } from "../../contexts/login";
 
-const Links = ["Dashboard", "Order", "Users"];
+const Links = ["Dashboard", "Order", "Users", "Demand"];
 
 const NavLink = ({ to, children }: { to: any; children: ReactNode }) => (
   <Link

@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./componentes/navbar";
+import { DemandProvider } from "./contexts/demand";
 import { AccountProvider } from "./contexts/login";
-import Dashboard from "./pages/Demand";
+import Dashboard, { Demand } from "./pages/Demand";
 import Login from "./pages/Login";
 import Order from "./pages/Order";
 import { Users } from "./pages/Users";
@@ -72,6 +73,14 @@ export function Routess() {
           <AccountProvider>
             <Login />
           </AccountProvider>
+        }
+      />
+      <Route
+        path="/Demand"
+        element={
+          <DemandProvider>
+            <Demand />
+          </DemandProvider>
         }
       />
     </Routes>
