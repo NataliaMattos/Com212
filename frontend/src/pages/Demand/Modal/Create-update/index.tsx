@@ -25,7 +25,7 @@ import {
 import axios from "axios";
 import { FormEvent, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
-import { uuid } from "uuidv4";
+import { v4 as uuid } from "uuid";
 import { DemandContext } from "../../../../contexts/demand";
 
 

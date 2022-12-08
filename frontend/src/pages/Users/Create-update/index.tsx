@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios';
 import { User, UserContext } from '../../../contexts/user';
-import { uuid } from 'uuidv4';
+import { v4 as uuid  } from 'uuid';
 
 interface dateTable {
   create: (value: boolean) => void;
