@@ -1,4 +1,3 @@
-import AWS from "aws-sdk";
 import axios from "axios";
 import { Request, Response } from "express";
 import fs from "fs";
@@ -16,7 +15,6 @@ export class OrderController {
       const body = request.body;
       console.log(body);
       const extension = body.file.split(";")[0].split("/")[1];
-      const base64Data = body.file.split(`base64,`)[1];
 
       await manager
         .createQueryBuilder()
@@ -27,21 +25,21 @@ export class OrderController {
           filename: body.fileName,
           category: body.category,
           extension: extension,
-          path: base64Data,
+          path: body.file,
           user_id: body.user_id,
         })
         .execute();
 
       const demandas = await manager.createQueryBuilder().select('*').from('public.demandas', 'demandas').getRawMany();
 
-      fs.writeFile(
-        `D:\\com242\\media\\${body.fileId}.${extension}`,
-        base64Data,
-        "base64",
-        function (err) {
-          console.log(err);
-        }
-      );
+      // fs.writeFile(
+      //   `D:\\com242\\media\\${body.fileId}.${extension}`,
+      //   base64Data,
+      //   "base64",
+      //   function (err) {
+      //     console.log(err);
+      //   }
+      // );
 
       response.status(200).send(demandas);
     } catch (error) {

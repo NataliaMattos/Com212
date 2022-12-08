@@ -16,7 +16,7 @@ export class UserController {
         .insert()
         .into("public.users")
         .values({
-          body,
+          ...body,
         })
         .execute();
 

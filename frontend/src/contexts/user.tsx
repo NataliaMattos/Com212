@@ -4,7 +4,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 export interface User {
   id?: string;
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   password: string;
 }
@@ -16,7 +16,7 @@ interface UserProviderProps {
 export interface Users {
   id: string;
   name: string;
-  lastname: string;
+  lastName: string;
   email: string;
   password: string;
 }

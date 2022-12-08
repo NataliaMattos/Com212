@@ -13,7 +13,7 @@ import {
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Links = ["Dashboard", "Order", "Users", "Demand"];
+const Links = ["Order", "Users", "Demand"];
 
 const NavLink = ({ to, children }: { to: any; children: ReactNode }) => (
   <Link

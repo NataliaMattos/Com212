@@ -27,7 +27,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
     option === "create" ? "" : userEdit[0]?.name
   );
   const [lastName, setLastName] = useState(
-    option === "create" ? "" : userEdit[0]?.lastname
+    option === "create" ? "" : userEdit[0]?.lastName
   );
   const [email, setEmail] = useState(
     option === "create" ? "" : userEdit[0]?.email
@@ -40,7 +40,6 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
 
   const handleSubmit = (event: FormEvent) => {
     const unique_id = uuid();
-    debugger;
     if (option === "create") {
       event.preventDefault();
       axios
@@ -73,11 +72,10 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
           // setRefresh(!refresh);
         });
     } else if (option === "update") {
-      debugger;
       axios
         .patch(`http://localhost:3000/user/${id}`, {
           name: name,
-          lastname: lastName,
+          lastName: lastName,
           email: email,
           password: password,
         })
@@ -167,7 +165,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
-                  type="text"
+                  type="password"
                   value={password}
                   onChange={(event) => {
                     setPassword(event?.target.value);
