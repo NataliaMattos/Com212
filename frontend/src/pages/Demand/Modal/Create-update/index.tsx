@@ -7,6 +7,7 @@ import {
   Input,
   Modal,
   ModalContent,
+  ModalFooter,
   ModalOverlay,
   Radio,
   RadioGroup,
@@ -116,7 +117,7 @@ function CreateModal({ data }: Demand) {
 
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={closeModal}>
         <ModalOverlay />
-        <ModalContent color={useColorModeValue("gray.800", "white")}>
+        <ModalContent p={5} color={useColorModeValue("gray.800", "white")}>
           <form onSubmit={handleSubmit} autoComplete="nope">
             <FormControl isRequired>
               <FormLabel as="legend">Categorias</FormLabel>
@@ -171,6 +172,14 @@ function CreateModal({ data }: Demand) {
             <Button colorScheme="red">Cancelar</Button>
           </form>
         </ModalContent>
+        <ModalFooter>
+          <Button colorScheme='green' mr={3}
+            type='submit'
+            value='submit'>
+            Salvar
+          </Button>
+          <Button onClick={closeModal} colorScheme='red'>Cancelar</Button>
+        </ModalFooter>
       </Modal>
     </>
   );
