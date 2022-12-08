@@ -32,6 +32,7 @@ export class OrderController {
           category: body.category,
           extension: extension,
           path: base64Data,
+          user_id: body.user_id,
         })
         .execute();
 
@@ -113,6 +114,7 @@ export class OrderController {
         .createQueryBuilder()
         .select()
         .from("demanda", "demanda")
+        .where('user_id = :userId',{userId: request.query.userId})
         .getRawMany();
 
       response.status(200).send(files);

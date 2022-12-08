@@ -26,9 +26,8 @@ import axios from "axios";
 import { FormEvent, useContext, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { uuid } from "uuidv4";
-import { UserContext } from "../../../../contexts/user";
+import { DemandContext } from "../../../../contexts/demand";
 
-// import { BlackContext } from '../../../../contexts/BlacklistContext';
 
 interface dateTable {
   filename: string;
@@ -58,7 +57,7 @@ function CreateModal(data: any) {
   });
 
   const [isWaiting, setIsWaiting] = useState(false);
-  const { setRefresh, refresh } = useContext(UserContext);
+  const { setRefresh, refresh } = useContext(DemandContext);
   const toast = useToast();
   let unique_id = "";
 
