@@ -31,13 +31,13 @@ export default function Login() {
 
   const { colorMode, toggleColorMode } = useColorMode();
 
-  useEffect(() => {
-    const userId = localStorage.getItem("userId");
+  // useEffect(() => {
+  //   const userType = localStorage.getItem("userType");
 
-    if (!userId) return;
+  //   if (!userType) return;
 
-    navigate("/Demand");
-  }, [navigate]);
+  //   navigate("/Demand");
+  // }, [navigate]);
 
   const handleLoginSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -48,8 +48,8 @@ export default function Login() {
       });
       const { id } = loginResponse.data.user;
 
-      localStorage.setItem("userId", id);
-
+      localStorage.setItem("userType", 'manager');
+      console.log('aaa');
       navigate("/Demand");
     } catch (err) {
       toast({

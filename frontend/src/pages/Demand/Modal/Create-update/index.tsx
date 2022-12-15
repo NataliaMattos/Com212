@@ -50,7 +50,7 @@ function CreateModal({ data }: Demand) {
   const handleSubmit = (event: FormEvent) => {
     setIsWaiting(true);
     const unique_id = uuid();
-    const userId = localStorage.getItem("userId");
+    const userType = localStorage.getItem("userType");
     event.preventDefault();
     axios
       .patch(`http://localhost:3000/order/${id}`, {
@@ -58,7 +58,7 @@ function CreateModal({ data }: Demand) {
         category: order.category,
         filename: order.fileName,
         file: order.file,
-        user_id: userId,
+        user_id: userType,
         extension: order.extension,
       })
       .then(() => {

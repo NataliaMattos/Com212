@@ -33,7 +33,7 @@ function Order() {
   const toast = useToast();
 
   const handleSubmit = (event: FormEvent) => {
-    const userId = localStorage.getItem("userId");
+    const userType = localStorage.getItem("userType");
     setIsWaiting(true);
     event.preventDefault();
     axios
@@ -42,7 +42,7 @@ function Order() {
         category: order.category,
         fileName: order.fileName,
         file: order.file,
-        user_id: userId,
+        user_id: userType,
       })
       .then(() => {
         toast({
@@ -89,6 +89,7 @@ function Order() {
   };
   return (
     <>
+    <Text fontSize="3xl" fontWeight={"bold"} w="100%" ml={5} mt={5}>Criar Demandas</Text>
       <form onSubmit={handleSubmit} autoComplete="nope">
         <Flex flexDirection="column" w="100%" marginTop={10}>
           <Box margin="0 auto">

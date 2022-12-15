@@ -13,7 +13,13 @@ import {
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Links = ["Order", "Users", "Demand"];
+interface Links {
+  navItem: string,
+  route: string
+}
+
+
+const Links = [{navItem:"Demandas", route: "Demand"},{navItem:"Criar Demanda", route: "Order"}, {navItem:"Usuários", route: "Users"}, {navItem:"Gerentes", route: "Managers"}, {navItem:"Administradores", route: "Admin"}];
 
 const NavLink = ({ to, children }: { to: any; children: ReactNode }) => (
   <Link
@@ -35,7 +41,7 @@ export default function NavBar({ children }: { children: ReactNode }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("userId");
+    localStorage.removeItem("userType");
     navigate("/", {
       replace: true,
     });
@@ -58,9 +64,9 @@ export default function NavBar({ children }: { children: ReactNode }) {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
-                <NavLink to={link} key={link}>
-                  {link}
+              {Links.map((link: Links) => (
+                <NavLink to={link.route} key={link.route}>
+                  {link.navItem}
                 </NavLink>
               ))}
             </HStack>
@@ -78,8 +84,8 @@ export default function NavBar({ children }: { children: ReactNode }) {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               {Links.map((link) => (
-                <NavLink to={link} key={link}>
-                  {link}
+                <NavLink to={link.route} key={link.route}>
+                  {link.navItem}
                 </NavLink>
               ))}
             </Stack>
