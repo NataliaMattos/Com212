@@ -12,28 +12,34 @@ import {
 import axios from "axios";
 import { FormEvent, useContext, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { User, UserContext } from "../../../contexts/user";
+import { Admin, AdminContext } from "../../../contexts/admin";
 
 interface dateTable {
   create: (value: boolean) => void;
-  userEdit: User[];
+  adminEdit: Admin[];
   option: string;
 }
 
-function UpdateUser({ create, userEdit, option }: dateTable) {
-  const [id] = useState(option !== "create" ? userEdit[0]?.id : "");
-  const { setRefresh, refresh } = useContext(UserContext);
+function UpdateAdmin({ create, adminEdit, option }: dateTable) {
+  const [id] = useState(option !== "create" ? adminEdit[0]?.id : "");
+  const { setRefresh, refresh } = useContext(AdminContext);
   const [name, setName] = useState(
-    option === "create" ? "" : userEdit[0]?.name
+    option === "create" ? "" : adminEdit[0]?.name
   );
   const [lastname, setlastname] = useState(
-    option === "create" ? "" : userEdit[0]?.lastname
+    option === "create" ? "" : adminEdit[0]?.lastname
   );
   const [email, setEmail] = useState(
-    option === "create" ? "" : userEdit[0]?.email
+    option === "create" ? "" : adminEdit[0]?.email
   );
   const [password, setPassword] = useState(
-    option === "create" ? "" : userEdit[0]?.password
+    option === "create" ? "" : adminEdit[0]?.password
+  );
+  const [branch, setBranch] = useState(
+    option === "create" ? "" : adminEdit[0]?.branch
+  );
+  const [department, setDepartment] = useState(
+    option === "create" ? "" : adminEdit[0]?.department
   );
 
   const toast = useToast();
@@ -43,23 +49,25 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
     if (option === "create") {
       event.preventDefault();
       axios
-        .post("http://localhost:3000/user", {
+        .post("http://localhost:3000/admin", {
           id: unique_id,
           name: name,
           lastname: lastname,
           email: email,
           password: password,
+          branch: branch,
+          department: department,
         })
         .then(() => {
           toast({
-            title: "Usuário Cadastrado.",
-            description: "Usuário Cadastrado com sucesso.",
+            title: "Admin Cadastrado.",
+            description: "Admin Cadastrado com sucesso.",
             status: "success",
             duration: 2000,
             isClosable: true,
           });
           closePage();
-          // setRefresh(!refresh);
+          setRefresh(!refresh);
         })
         .catch(() => {
           toast({
@@ -69,20 +77,22 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
             duration: 2000,
             isClosable: true,
           });
-          // setRefresh(!refresh);
+          setRefresh(!refresh);
         });
     } else if (option === "update") {
       axios
-        .patch(`http://localhost:3000/user/${id}`, {
+        .patch(`http://localhost:3000/admin/${id}`, {
           name: name,
           lastname: lastname,
           email: email,
           password: password,
+          branch: branch,
+          department: department,
         })
         .then(() => {
           toast({
-            title: "Usuário Atualizado.",
-            description: "Usuário Atualizado com sucesso.",
+            title: "Admin Atualizado.",
+            description: "Admin Atualizado com sucesso.",
             status: "success",
             duration: 2000,
             isClosable: true,
@@ -102,14 +112,14 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
           <Box width={"100%"} maxWidth={"1200px"}>
             {option === "create" ? (
               <Text fontSize="3xl" fontWeight={"bold"} mb={"30px"}>
-                Criar Conta
+                Criar Admin
               </Text>
             ) : (
               <Text fontSize="3xl" fontWeight={"bold"} mb={"30px"}>
-                Editar Conta
+                Editar Admin
               </Text>
             )}
-            <Text fontSize="2xl">Dados da Conta</Text>
+            <Text fontSize="2xl">Dados da Admin</Text>
             <SimpleGrid
               minChildWidth={"48%"}
               spacing="20px"
@@ -119,7 +129,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <Input
-                  id="nameUser"
+                  id="nameAdmin"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -133,7 +143,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="lastname">Ultimo Nome</FormLabel>
                 <Input
-                  id="lastnameUser"
+                  id="lastNameAdmin"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -147,7 +157,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
-                  id="emailUser"
+                  id="emailAdmin"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -161,7 +171,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="name">Senha</FormLabel>
                 <Input
-                  id="passwordUser"
+                  id="passwordAdmin"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -172,14 +182,42 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
                   }}
                 />
               </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="name">Filial</FormLabel>
+                <Input
+                  id="branchAdmin"
+                  max-length="300"
+                  borderColor="darkgrey"
+                  border="2px"
+                  type="text"
+                  value={branch}
+                  onChange={(event) => {
+                    setBranch(event?.target.value);
+                  }}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="name">Departamento</FormLabel>
+                <Input
+                  id="departamentAdmin"
+                  max-length="300"
+                  borderColor="darkgrey"
+                  border="2px"
+                  type="text"
+                  value={department}
+                  onChange={(event) => {
+                    setDepartment(event?.target.value);
+                  }}
+                />
+              </FormControl>
             </SimpleGrid>
 
             <br></br>
             <br></br>
-            <Button colorScheme="green" mr={3} type="submit" value="submit" id="saveUser">
+            <Button colorScheme="green" mr={3} type="submit" value="submit" id="SaveAdmin">
               Salvar
             </Button>
-            <Button onClick={closePage} colorScheme="red" id="cancelSaveUser">
+            <Button onClick={closePage} colorScheme="red" id="CancelSaveAdmin">
               Cancelar
             </Button>
           </Box>
@@ -188,4 +226,4 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
     </>
   );
 }
-export default UpdateUser;
+export default UpdateAdmin;

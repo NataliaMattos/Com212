@@ -17,7 +17,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { UserContext } from "../../../contexts/user";
+import { AdminContext } from "../../../contexts/admin";
 import axios from "axios";
 
 interface dateTable {
@@ -30,16 +30,16 @@ function DeleteModal({ name, id }: dateTable) {
   const [conta, setConta] = useState("");
   const toast = useToast();
 
-  const { refresh, setRefresh } = useContext(UserContext);
+  const { refresh, setRefresh } = useContext(AdminContext);
 
   const handleDelete = (event: FormEvent) => {
     event.preventDefault();
 
     try {
-      axios.delete(`http://localhost:3000/user/${id}`).then(() => {
+      axios.delete(`http://localhost:3000/admin/${id}`).then(() => {
         toast({
-          title: "Notícia Excluído",
-          description: "Notícia excluída com sucesso.",
+          title: "Gerente Excluído",
+          description: "Gerente excluída com sucesso.",
           status: "success",
           duration: 2000,
           isClosable: true,
@@ -61,7 +61,7 @@ function DeleteModal({ name, id }: dateTable) {
   return (
     <>
       <Button
-        id="deleteUser"
+      id="deleteAdmin"
         size="xs"
         variant="outline"
         onClick={() => {
@@ -76,7 +76,7 @@ function DeleteModal({ name, id }: dateTable) {
         <ModalContent color={useColorModeValue("gray.800", "white")}>
           <form onSubmit={handleDelete}>
             <ModalHeader color={useColorModeValue("green.500", "white")}>
-              Deseja Excluir Usuário?
+              Deseja Excluir Gerente?
             </ModalHeader>
             <ModalCloseButton />
 
@@ -92,7 +92,7 @@ function DeleteModal({ name, id }: dateTable) {
                   para confirmar.
                 </FormLabel>
                 <Input
-                  id="nameDeleteUser"
+                  id="nameDeleteAdmin"
                   borderColor="100"
                   value={conta}
                   onChange={(event) => {
@@ -104,15 +104,15 @@ function DeleteModal({ name, id }: dateTable) {
 
             <ModalFooter>
               <Button
-                id="deleteSaveUser"
                 disabled={conta !== name}
                 colorScheme="green"
                 mr={3}
                 type="submit"
+                id="deleteSaveAdmin"
               >
                 Excluir
               </Button>
-              <Button onClick={onClose} colorScheme="red" id="cancelDeleteUser">
+              <Button onClick={onClose} colorScheme="red" id="cancelDeleteAdmin">
                 Cancelar
               </Button>
             </ModalFooter>

@@ -31,26 +31,24 @@ export default function Login() {
 
   const { colorMode, toggleColorMode } = useColorMode();
 
-  useEffect(() => {
-    const userId = localStorage.getItem("userId");
+  // useEffect(() => {
+  //   const userType = localStorage.getItem("userType");
 
-    if (!userId) return;
+  //   if (!userType) return;
 
-    navigate("/Demand");
-  }, [navigate]);
+  //   navigate("/Demand");
+  // }, [navigate]);
 
   const handleLoginSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const loginResponse = await axios.post("/login", {
+      axios.post("/login", {
         email,
         password,
+      }).then((response) => {
+        localStorage.setItem("userType", response.data.code);     
+        navigate("/Demand");
       });
-      const { id } = loginResponse.data.user;
-
-      localStorage.setItem("userId", id);
-
-      navigate("/Demand");
     } catch (err) {
       toast({
         title: "Erro",
@@ -96,6 +94,7 @@ export default function Login() {
                       children={<FaEnvelope />}
                     />
                     <Input
+                      id="emailLogin"
                       size="lg"
                       borderRadius={"100px"}
                       placeholder="Username"
@@ -119,6 +118,7 @@ export default function Login() {
                       children={<FaLock />}
                     />
                     <Input
+                    id="passwordLogin"
                       size="lg"
                       borderRadius={"100px"}
                       placeholder="Password"
@@ -136,6 +136,7 @@ export default function Login() {
               <Flex display={"block"} m={"0 auto"}>
                 <Stack spacing={6}>
                   <Button
+                    id="buttonLogin"
                     size="lg"
                     borderRadius={"100px"}
                     mt={"10"}
@@ -155,7 +156,6 @@ export default function Login() {
 
         <Flex flex={1} align={"center"} justify={"center"}>
           <Image
-            // width={'500px'}
             px={["20%", "20%", "5%"]}
             alt={"Login Image"}
             objectFit={"cover"}

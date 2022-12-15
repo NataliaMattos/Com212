@@ -2,7 +2,7 @@ import AWS from "aws-sdk";
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
 import { connect } from "../database/index";
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 require("dotenv").config();
 
 connect();

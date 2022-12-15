@@ -32,13 +32,14 @@ export interface Demand {
 function DemandMain() {
   const [files, setFiles] = useState<Demand["data"][]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [userType, setUserType] = useState<any>();
   const { refresh } = useContext(DemandContext);
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    setUserType(localStorage.getItem("userType"));
     setIsLoading(false);
     axios
-      .get("http://localhost:3000/orders", { params: { userId } })
+      .get("http://localhost:3000/orders", { params: { userType } })
       .then((response) => {
         setFiles(response.data);
         setIsLoading(true);
@@ -69,6 +70,7 @@ function DemandMain() {
   // };
   return (
     <>
+      <Text fontSize="3xl" fontWeight={"bold"} w="100%">Demandas</Text>
       <Flex flexDirection="column" w="100%" marginTop={10}>
         <Box margin="0 auto">
           <Text fontSize="3xl" fontWeight={"bold"} w="100%">
@@ -82,7 +84,11 @@ function DemandMain() {
                   <Th>categoria</Th>
                   <Th>Extensao</Th>
                   {/* <Th>Download</Th> */}
-                  <Th>Ações</Th>
+                  { userType ===  'manager' || userType ===  'admin' ?
+                    <Th>Ações</Th>
+                      :
+                    ''
+                  }
                 </Tr>
               </Thead>
               <Tbody>
@@ -100,13 +106,15 @@ function DemandMain() {
                         >
                           Download
                         </Button> */}
-                      {/* </Td> */}
-                      <Td>
-                        <Box display="flex" justifyContent="space-evenly">
-                          <CreateModal data={elem} />
-                          <DeleteModal user={elem.filename} id={elem.id} />
-                        </Box>
-                      </Td>
+                      { userType ===  'manager' || userType ===  'admin' ?
+                        <Td>
+                          <Box display="flex" justifyContent="space-evenly">
+                            <CreateModal data={elem} />
+                            <DeleteModal user={elem.filename} id={elem.id} />
+                          </Box>
+                        </Td> :
+                        ''
+                      }
                     </Tr>
                   );
                 })}

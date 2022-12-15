@@ -33,7 +33,7 @@ function Order() {
   const toast = useToast();
 
   const handleSubmit = (event: FormEvent) => {
-    const userId = localStorage.getItem("userId");
+    const userType = localStorage.getItem("userType");
     setIsWaiting(true);
     event.preventDefault();
     axios
@@ -42,7 +42,7 @@ function Order() {
         category: order.category,
         fileName: order.fileName,
         file: order.file,
-        user_id: userId,
+        user_id: userType,
       })
       .then(() => {
         toast({
@@ -89,6 +89,7 @@ function Order() {
   };
   return (
     <>
+    <Text fontSize="3xl" fontWeight={"bold"} w="100%" ml={5} mt={5}>Criar Demandas</Text>
       <form onSubmit={handleSubmit} autoComplete="nope">
         <Flex flexDirection="column" w="100%" marginTop={10}>
           <Box margin="0 auto">
@@ -102,6 +103,7 @@ function Order() {
                 <FormControl isRequired>
                   <FormLabel as="legend">Categorias</FormLabel>
                   <RadioGroup
+                    id="categoryOrder"
                     defaultValue="filme"
                     value={order.category}
                     onChange={(event) => {
@@ -124,7 +126,7 @@ function Order() {
                   <FormControl isRequired>
                     <FormLabel htmlFor="name">Nome</FormLabel>
                     <Input
-                      id="name"
+                      id="nameOrder"
                       max-length="300"
                       borderColor="darkgrey"
                       border="2px"
@@ -142,7 +144,7 @@ function Order() {
                     <Input
                       multiple
                       type="file"
-                      id="name"
+                      id="fileOrder"
                       max-length="300"
                       border="none"
                       onChange={(event) => {
@@ -154,10 +156,10 @@ function Order() {
                 </Box>
               </Flex>
             </SimpleGrid>
-            <Button colorScheme="green" mr={3} type="submit" value="submit">
+            <Button colorScheme="green" mr={3} type="submit" value="submit" id="saveOrder">
               {isWaiting ? <Spinner color="white.500" /> : <div> Salvar</div>}
             </Button>
-            <Button colorScheme="red">Cancelar</Button>
+            <Button colorScheme="red" id="cancelOrder">Cancelar</Button>
           </Box>
         </Flex>
       </form>

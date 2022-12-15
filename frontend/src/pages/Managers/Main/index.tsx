@@ -17,38 +17,38 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { IoIosAdd } from "react-icons/io";
-import { User, UserContext, Users } from "../../../contexts/user";
+import { Manager, ManagerContext, Managers } from "../../../contexts/manager";
 import DeleteModal from "../delete";
-interface MainUsersProps {
+interface MainManagersProps {
   create: (value: boolean) => void;
-  UserEdit: (value: User[]) => void;
+  ManagerEdit: (value: Manager[]) => void;
   setOption: (value: string) => void;
 }
 
-const MainUsers: React.FC<MainUsersProps> = ({
+const MainManagers: React.FC<MainManagersProps> = ({
   create,
-  UserEdit,
+  ManagerEdit,
   setOption,
-}: MainUsersProps): React.ReactElement => {
-  const { users, isLoading } = useContext(UserContext);
+}: MainManagersProps): React.ReactElement => {
+  const { managers, isLoading } = useContext(ManagerContext);
 
-  const [User, setUser] = useState<Users[]>([]);
-  const [createUsers, setCreateUsers] = useState(false);
-  const [conta, setConta] = useState<User>();
+  const [Manager, setManager] = useState<Managers[]>([]);
+  const [createManagers, setCreateManagers] = useState(false);
+  const [conta, setConta] = useState<Manager>();
   const [userType, setUserType] = useState<any>();
   const [newOperation, setnewOperation] = useState<string>("");
 
   useEffect(() => {
-    setUser(users);
-  }, [users]);
+    setManager(managers);
+  }, [managers]);
 
   useEffect(() => {
-    create(createUsers);
-  }, [create, createUsers]);
+    create(createManagers);
+  }, [create, createManagers]);
 
   useEffect(() => {
-    return UserEdit(conta ? [conta] : []);
-  }, [UserEdit, conta]);
+    return ManagerEdit(conta ? [conta] : []);
+  }, [ManagerEdit, conta]);
 
   useEffect(() => {
     setOption(newOperation);
@@ -60,30 +60,30 @@ const MainUsers: React.FC<MainUsersProps> = ({
 
   return (
     <>
-      {<Heading mb={3}>Lista de Usuários</Heading>}
+      {<Heading mb={3}>Lista de Gerentes</Heading>}
       <Flex flexDirection="column" w="100%" marginTop={10}>
         <Flex mb="20px" display="flex" alignItems="center">
           <Spacer />
           <Box>
-            {(isLoading) && (userType === "manager" || userType === "admin") ? (
+            {(isLoading) && userType === "admin" ? (
               <Button
                 leftIcon={<IoIosAdd />}
                 colorScheme="green"
                 variant="solid"
                 onClick={() => {
-                  setCreateUsers(true);
+                  setCreateManagers(true);
                   setnewOperation("create");
                 }}
               >
                 Adicionar
               </Button>
-            ) : userType === "manager" || userType === "admin" ? (
+            ) : userType === "admin" ? (
               <Button
                 leftIcon={<IoIosAdd />}
                 colorScheme="green"
                 variant="solid"
                 isDisabled={true}
-                id="createUser"
+                id="createManager"
               >
                 Adicionar
               </Button>
@@ -96,11 +96,12 @@ const MainUsers: React.FC<MainUsersProps> = ({
           <Table variant="simple">
             <Thead>
               <Tr>
-                <Th>Conta</Th>
-                <Th>Código</Th>
-                <Th>Status</Th>
-                <Th>Tipo</Th>
-                {userType === "manager" || userType === "admin" ? (
+                <Th>Nome</Th>
+                <Th>Sobrenome</Th>
+                <Th>Email</Th>
+                <Th>Senha</Th>
+                <Th>Filial</Th>
+                {userType === "admin" ? (
                   <Th>Ações</Th>
                 ) : (
                   ""
@@ -108,22 +109,23 @@ const MainUsers: React.FC<MainUsersProps> = ({
               </Tr>
             </Thead>
             <Tbody>
-              {users.map((elem: Users, i: number) => {
+              {managers.map((elem: Managers, i: number) => {
                 return (
                   <Tr key={i}>
                     <Td>{elem.name}</Td>
                     <Td>{elem.lastname}</Td>
                     <Td>{elem.email}</Td>
                     <Td>{elem.password}</Td>
-                    {userType === "manager" || userType === "admin" ? (
+                    <Td>{elem.branch}</Td>
+                    {userType === "admin" ? (
                       <Td>
                         <Box display="flex" justifyContent="space-evenly">
                           <Button
-                            id="editUser"
+                            id="editManager"
                             size="xs"
                             variant="outline"
                             onClick={() => {
-                              setCreateUsers(true);
+                              setCreateManagers(true);
                               setnewOperation("update");
                               setConta(elem);
                             }}
@@ -158,4 +160,4 @@ const MainUsers: React.FC<MainUsersProps> = ({
     </>
   );
 };
-export default MainUsers;
+export default MainManagers;
