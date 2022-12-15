@@ -38,8 +38,7 @@ export function ManagerProvider({ children }: ManagerProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:3000//managers").then((response) => {
-      console.log(response.data)
+    axios.get("http://localhost:3000/managers").then((response) => {
       setManagers(response.data);
       setIsLoading(true);
     });

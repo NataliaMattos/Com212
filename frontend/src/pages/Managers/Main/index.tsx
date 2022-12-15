@@ -35,7 +35,7 @@ const MainManagers: React.FC<MainManagersProps> = ({
   const [Manager, setManager] = useState<Managers[]>([]);
   const [createManagers, setCreateManagers] = useState(false);
   const [conta, setConta] = useState<Manager>();
-  const [managerType, setManagerType] = useState<any>();
+  const [userType, setUserType] = useState<any>();
   const [newOperation, setnewOperation] = useState<string>("");
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const MainManagers: React.FC<MainManagersProps> = ({
   }, [setOption, newOperation]);
 
   useEffect(() => {
-    setManagerType(localStorage.getItem("managerType"));
+    setUserType(localStorage.getItem("userType"));
   }, []);
 
   return (
@@ -65,7 +65,7 @@ const MainManagers: React.FC<MainManagersProps> = ({
         <Flex mb="20px" display="flex" alignItems="center">
           <Spacer />
           <Box>
-            {(isLoading) && (managerType === "manager" || managerType === "admin") ? (
+            {(isLoading) && userType === "admin" ? (
               <Button
                 leftIcon={<IoIosAdd />}
                 colorScheme="green"
@@ -77,7 +77,7 @@ const MainManagers: React.FC<MainManagersProps> = ({
               >
                 Adicionar
               </Button>
-            ) : managerType === "admin" ? (
+            ) : userType === "admin" ? (
               <Button
                 leftIcon={<IoIosAdd />}
                 colorScheme="green"
@@ -101,7 +101,7 @@ const MainManagers: React.FC<MainManagersProps> = ({
                 <Th>Email</Th>
                 <Th>Senha</Th>
                 <Th>Filial</Th>
-                {managerType === "manager" || managerType === "admin" ? (
+                {userType === "admin" ? (
                   <Th>Ações</Th>
                 ) : (
                   ""
@@ -117,7 +117,7 @@ const MainManagers: React.FC<MainManagersProps> = ({
                     <Td>{elem.email}</Td>
                     <Td>{elem.password}</Td>
                     <Td>{elem.branch}</Td>
-                    {managerType === "admin" ? (
+                    {userType === "admin" ? (
                       <Td>
                         <Box display="flex" justifyContent="space-evenly">
                           <Button

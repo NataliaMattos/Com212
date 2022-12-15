@@ -63,7 +63,7 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
             isClosable: true,
           });
           closePage();
-          // setRefresh(!refresh);
+          setRefresh(!refresh);
         })
         .catch(() => {
           toast({
@@ -73,7 +73,7 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
             duration: 2000,
             isClosable: true,
           });
-          // setRefresh(!refresh);
+          setRefresh(!refresh);
         });
     } else if (option === "update") {
       axios
@@ -107,14 +107,14 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
           <Box width={"100%"} maxWidth={"1200px"}>
             {option === "create" ? (
               <Text fontSize="3xl" fontWeight={"bold"} mb={"30px"}>
-                Criar Conta
+                Criar Gerente
               </Text>
             ) : (
               <Text fontSize="3xl" fontWeight={"bold"} mb={"30px"}>
-                Editar Conta
+                Editar Gerente
               </Text>
             )}
-            <Text fontSize="2xl">Dados da Conta</Text>
+            <Text fontSize="2xl">Dados da Gerente</Text>
             <SimpleGrid
               minChildWidth={"48%"}
               spacing="20px"
@@ -184,8 +184,8 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
-                  type="password"
-                  value={password}
+                  type="text"
+                  value={branch}
                   onChange={(event) => {
                     setBranch(event?.target.value);
                   }}

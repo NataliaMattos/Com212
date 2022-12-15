@@ -109,7 +109,7 @@ const MainAdmins: React.FC<MainAdminsProps> = ({
                     <Td>{elem.email}</Td>
                     <Td>{elem.password}</Td>
                     <Td>{elem.branch}</Td>
-                    <Td>{elem.departament}</Td>
+                    <Td>{elem.department}</Td>
                     <Td>
                       <Box display="flex" justifyContent="space-evenly">
                         <Button

@@ -38,8 +38,8 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
   const [branch, setBranch] = useState(
     option === "create" ? "" : adminEdit[0]?.branch
   );
-  const [departament, setDepartament] = useState(
-    option === "create" ? "" : adminEdit[0]?.departament
+  const [department, setDepartment] = useState(
+    option === "create" ? "" : adminEdit[0]?.department
   );
 
   const toast = useToast();
@@ -55,19 +55,19 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
           lastname: lastname,
           email: email,
           password: password,
-          branch: password,
-          departament: password,
+          branch: branch,
+          department: department,
         })
         .then(() => {
           toast({
-            title: "Gerente Cadastrado.",
-            description: "Gerente Cadastrado com sucesso.",
+            title: "Admin Cadastrado.",
+            description: "Admin Cadastrado com sucesso.",
             status: "success",
             duration: 2000,
             isClosable: true,
           });
           closePage();
-          // setRefresh(!refresh);
+          setRefresh(!refresh);
         })
         .catch(() => {
           toast({
@@ -77,7 +77,7 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
             duration: 2000,
             isClosable: true,
           });
-          // setRefresh(!refresh);
+          setRefresh(!refresh);
         });
     } else if (option === "update") {
       axios
@@ -87,12 +87,12 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
           email: email,
           password: password,
           branch: branch,
-          departament: departament,
+          department: department,
         })
         .then(() => {
           toast({
-            title: "Gerente Atualizado.",
-            description: "Gerente Atualizado com sucesso.",
+            title: "Admin Atualizado.",
+            description: "Admin Atualizado com sucesso.",
             status: "success",
             duration: 2000,
             isClosable: true,
@@ -112,14 +112,14 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
           <Box width={"100%"} maxWidth={"1200px"}>
             {option === "create" ? (
               <Text fontSize="3xl" fontWeight={"bold"} mb={"30px"}>
-                Criar Conta
+                Criar Admin
               </Text>
             ) : (
               <Text fontSize="3xl" fontWeight={"bold"} mb={"30px"}>
-                Editar Conta
+                Editar Admin
               </Text>
             )}
-            <Text fontSize="2xl">Dados da Conta</Text>
+            <Text fontSize="2xl">Dados da Admin</Text>
             <SimpleGrid
               minChildWidth={"48%"}
               spacing="20px"
@@ -204,9 +204,9 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
                   borderColor="darkgrey"
                   border="2px"
                   type="text"
-                  value={departament}
+                  value={department}
                   onChange={(event) => {
-                    setDepartament(event?.target.value);
+                    setDepartment(event?.target.value);
                   }}
                 />
               </FormControl>
