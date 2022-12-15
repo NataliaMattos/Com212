@@ -83,6 +83,7 @@ const MainManagers: React.FC<MainManagersProps> = ({
                 colorScheme="green"
                 variant="solid"
                 isDisabled={true}
+                id="createManager"
               >
                 Adicionar
               </Button>
@@ -95,10 +96,11 @@ const MainManagers: React.FC<MainManagersProps> = ({
           <Table variant="simple">
             <Thead>
               <Tr>
-                <Th>Conta</Th>
-                <Th>Código</Th>
-                <Th>Status</Th>
-                <Th>Tipo</Th>
+                <Th>Nome</Th>
+                <Th>Sobrenome</Th>
+                <Th>Email</Th>
+                <Th>Senha</Th>
+                <Th>Filial</Th>
                 {managerType === "manager" || managerType === "admin" ? (
                   <Th>Ações</Th>
                 ) : (
@@ -114,10 +116,12 @@ const MainManagers: React.FC<MainManagersProps> = ({
                     <Td>{elem.lastname}</Td>
                     <Td>{elem.email}</Td>
                     <Td>{elem.password}</Td>
+                    <Td>{elem.branch}</Td>
                     {managerType === "admin" ? (
                       <Td>
                         <Box display="flex" justifyContent="space-evenly">
                           <Button
+                            id="editManager"
                             size="xs"
                             variant="outline"
                             onClick={() => {

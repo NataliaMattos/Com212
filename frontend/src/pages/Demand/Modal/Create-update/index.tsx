@@ -112,7 +112,7 @@ function CreateModal({ data }: Demand) {
 
   return (
     <>
-      <Button size="xs" variant="outline" onClick={onOpen}>
+      <Button size="xs" variant="outline" onClick={onOpen} id="editDemand">
         <FiEdit />
       </Button>
 
@@ -123,6 +123,7 @@ function CreateModal({ data }: Demand) {
             <FormControl isRequired>
               <FormLabel as="legend">Categorias</FormLabel>
               <RadioGroup
+                id="categoryDemand"
                 defaultValue="filme"
                 value={order.category}
                 onChange={(event) => {
@@ -142,12 +143,12 @@ function CreateModal({ data }: Demand) {
             <FormControl isRequired>
               <FormLabel htmlFor="name">Nome</FormLabel>
               <Input
-                id="name"
                 max-length="300"
                 borderColor="darkgrey"
                 border="2px"
                 type="text"
                 value={order.fileName}
+                id="nameDemand"
                 onChange={(event) => {
                   saveInputName(event?.target.value);
                 }}
@@ -158,7 +159,7 @@ function CreateModal({ data }: Demand) {
               <Input
                 multiple
                 type="file"
-                id="name"
+                id="fileDemand"
                 max-length="300"
                 border="none"
                 onChange={(event) => {
@@ -167,20 +168,12 @@ function CreateModal({ data }: Demand) {
                 accept="video/*,image/*,audio/*"
               />
             </FormControl>
-            <Button colorScheme="green" mr={3} type="submit" value="submit">
+            <Button colorScheme="green" mr={3} type="submit" value="submit" id="saveDemand">
               {isWaiting ? <Spinner color="white.500" /> : <div> Salvar</div>}
             </Button>
-            <Button colorScheme="red">Cancelar</Button>
+            <Button onClick={closeModal} colorScheme="red" id="cancelSaveDemand">Cancelar</Button>
           </form>
         </ModalContent>
-        <ModalFooter>
-          <Button colorScheme='green' mr={3}
-            type='submit'
-            value='submit'>
-            Salvar
-          </Button>
-          <Button onClick={closeModal} colorScheme='red'>Cancelar</Button>
-        </ModalFooter>
       </Modal>
     </>
   );

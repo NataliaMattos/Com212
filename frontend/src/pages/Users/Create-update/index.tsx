@@ -119,7 +119,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <Input
-                  id="name"
+                  id="nameUser"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -133,7 +133,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="lastname">Ultimo Nome</FormLabel>
                 <Input
-                  id="lastname"
+                  id="lastnameUser"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -147,7 +147,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
-                  id="email"
+                  id="emailUser"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -161,7 +161,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="name">Senha</FormLabel>
                 <Input
-                  id="senha"
+                  id="passwordUser"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -176,10 +176,10 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
 
             <br></br>
             <br></br>
-            <Button colorScheme="green" mr={3} type="submit" value="submit">
+            <Button colorScheme="green" mr={3} type="submit" value="submit" id="saveUser">
               Salvar
             </Button>
-            <Button onClick={closePage} colorScheme="red">
+            <Button onClick={closePage} colorScheme="red" id="cancelSaveUser">
               Cancelar
             </Button>
           </Box>

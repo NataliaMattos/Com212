@@ -35,6 +35,9 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
   const [password, setPassword] = useState(
     option === "create" ? "" : managerEdit[0]?.password
   );
+  const [branch, setBranch] = useState(
+    option === "create" ? "" : managerEdit[0]?.branch
+  );
 
   const toast = useToast();
 
@@ -49,6 +52,7 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
           lastname: lastname,
           email: email,
           password: password,
+          branch: branch,
         })
         .then(() => {
           toast({
@@ -78,6 +82,7 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
           lastname: lastname,
           email: email,
           password: password,
+          branch: branch,
         })
         .then(() => {
           toast({
@@ -119,7 +124,7 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <Input
-                  id="name"
+                  id="nameManager"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -133,7 +138,7 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="lastname">Ultimo Nome</FormLabel>
                 <Input
-                  id="lastname"
+                  id="lastnameManager"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -147,7 +152,7 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
-                  id="email"
+                  id="emailManager"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -161,7 +166,7 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="name">Senha</FormLabel>
                 <Input
-                  id="senha"
+                  id="passwordManager"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -172,14 +177,28 @@ function UpdateManager({ create, managerEdit, option }: dateTable) {
                   }}
                 />
               </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="name">Filial</FormLabel>
+                <Input
+                  id="branchManager"
+                  max-length="300"
+                  borderColor="darkgrey"
+                  border="2px"
+                  type="password"
+                  value={password}
+                  onChange={(event) => {
+                    setBranch(event?.target.value);
+                  }}
+                />
+              </FormControl>
             </SimpleGrid>
 
             <br></br>
             <br></br>
-            <Button colorScheme="green" mr={3} type="submit" value="submit">
+            <Button colorScheme="green" mr={3} type="submit" value="submit" id="saveManager">
               Salvar
             </Button>
-            <Button onClick={closePage} colorScheme="red">
+            <Button onClick={closePage} colorScheme="red"  id="cancelSaveDemand">
               Cancelar
             </Button>
           </Box>

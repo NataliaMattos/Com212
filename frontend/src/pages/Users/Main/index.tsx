@@ -83,6 +83,7 @@ const MainUsers: React.FC<MainUsersProps> = ({
                 colorScheme="green"
                 variant="solid"
                 isDisabled={true}
+                id="createUser"
               >
                 Adicionar
               </Button>
@@ -118,6 +119,7 @@ const MainUsers: React.FC<MainUsersProps> = ({
                       <Td>
                         <Box display="flex" justifyContent="space-evenly">
                           <Button
+                            id="editUser"
                             size="xs"
                             variant="outline"
                             onClick={() => {

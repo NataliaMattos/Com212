@@ -35,6 +35,12 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
   const [password, setPassword] = useState(
     option === "create" ? "" : adminEdit[0]?.password
   );
+  const [branch, setBranch] = useState(
+    option === "create" ? "" : adminEdit[0]?.branch
+  );
+  const [departament, setDepartament] = useState(
+    option === "create" ? "" : adminEdit[0]?.departament
+  );
 
   const toast = useToast();
 
@@ -49,6 +55,8 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
           lastname: lastname,
           email: email,
           password: password,
+          branch: password,
+          departament: password,
         })
         .then(() => {
           toast({
@@ -78,6 +86,8 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
           lastname: lastname,
           email: email,
           password: password,
+          branch: branch,
+          departament: departament,
         })
         .then(() => {
           toast({
@@ -119,7 +129,7 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="name">Nome</FormLabel>
                 <Input
-                  id="name"
+                  id="nameAdmin"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -133,7 +143,7 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="lastname">Ultimo Nome</FormLabel>
                 <Input
-                  id="lastname"
+                  id="lastNameAdmin"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -147,7 +157,7 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="email">Email</FormLabel>
                 <Input
-                  id="email"
+                  id="emailAdmin"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -161,7 +171,7 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
               <FormControl isRequired>
                 <FormLabel htmlFor="name">Senha</FormLabel>
                 <Input
-                  id="senha"
+                  id="passwordAdmin"
                   max-length="300"
                   borderColor="darkgrey"
                   border="2px"
@@ -172,14 +182,42 @@ function UpdateAdmin({ create, adminEdit, option }: dateTable) {
                   }}
                 />
               </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="name">Filial</FormLabel>
+                <Input
+                  id="branchAdmin"
+                  max-length="300"
+                  borderColor="darkgrey"
+                  border="2px"
+                  type="text"
+                  value={branch}
+                  onChange={(event) => {
+                    setBranch(event?.target.value);
+                  }}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="name">Departamento</FormLabel>
+                <Input
+                  id="departamentAdmin"
+                  max-length="300"
+                  borderColor="darkgrey"
+                  border="2px"
+                  type="text"
+                  value={departament}
+                  onChange={(event) => {
+                    setDepartament(event?.target.value);
+                  }}
+                />
+              </FormControl>
             </SimpleGrid>
 
             <br></br>
             <br></br>
-            <Button colorScheme="green" mr={3} type="submit" value="submit">
+            <Button colorScheme="green" mr={3} type="submit" value="submit" id="SaveAdmin">
               Salvar
             </Button>
-            <Button onClick={closePage} colorScheme="red">
+            <Button onClick={closePage} colorScheme="red" id="CancelSaveAdmin">
               Cancelar
             </Button>
           </Box>

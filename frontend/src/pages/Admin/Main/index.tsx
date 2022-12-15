@@ -62,6 +62,7 @@ const MainAdmins: React.FC<MainAdminsProps> = ({
           <Box>
             {isLoading ? (
               <Button
+                id="createAdmin"
                 leftIcon={<IoIosAdd />}
                 colorScheme="green"
                 variant="solid"
@@ -88,10 +89,12 @@ const MainAdmins: React.FC<MainAdminsProps> = ({
           <Table variant="simple">
             <Thead>
               <Tr>
-                <Th>Conta</Th>
-                <Th>Código</Th>
-                <Th>Status</Th>
-                <Th>Tipo</Th>
+                <Th>Nome</Th>
+                <Th>Sobrenome</Th>
+                <Th>Email</Th>
+                <Th>Senha</Th>
+                <Th>Filial</Th>
+                <Th>Departamento</Th>
                 <Th>
                   <Text textAlign="center">Ações</Text>
                 </Th>
@@ -105,9 +108,12 @@ const MainAdmins: React.FC<MainAdminsProps> = ({
                     <Td>{elem.lastname}</Td>
                     <Td>{elem.email}</Td>
                     <Td>{elem.password}</Td>
+                    <Td>{elem.branch}</Td>
+                    <Td>{elem.departament}</Td>
                     <Td>
                       <Box display="flex" justifyContent="space-evenly">
                         <Button
+                          id="editAdmin"
                           size="xs"
                           variant="outline"
                           onClick={() => {

@@ -48,7 +48,7 @@ export default function Login() {
       });
       const { id } = loginResponse.data.user;
 
-      localStorage.setItem("userType", 'manager');
+      localStorage.setItem("userType", 'admin');
       console.log('aaa');
       navigate("/Demand");
     } catch (err) {
@@ -96,6 +96,7 @@ export default function Login() {
                       children={<FaEnvelope />}
                     />
                     <Input
+                      id="emailLogin"
                       size="lg"
                       borderRadius={"100px"}
                       placeholder="Username"
@@ -119,6 +120,7 @@ export default function Login() {
                       children={<FaLock />}
                     />
                     <Input
+                    id="passwordLogin"
                       size="lg"
                       borderRadius={"100px"}
                       placeholder="Password"
@@ -136,6 +138,7 @@ export default function Login() {
               <Flex display={"block"} m={"0 auto"}>
                 <Stack spacing={6}>
                   <Button
+                    id="buttonLogin"
                     size="lg"
                     borderRadius={"100px"}
                     mt={"10"}

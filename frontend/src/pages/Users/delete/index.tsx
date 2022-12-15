@@ -61,6 +61,7 @@ function DeleteModal({ name, id }: dateTable) {
   return (
     <>
       <Button
+        id="deleteUser"
         size="xs"
         variant="outline"
         onClick={() => {
@@ -91,6 +92,7 @@ function DeleteModal({ name, id }: dateTable) {
                   para confirmar.
                 </FormLabel>
                 <Input
+                  id="nameDeleteUser"
                   borderColor="100"
                   value={conta}
                   onChange={(event) => {
@@ -102,7 +104,7 @@ function DeleteModal({ name, id }: dateTable) {
 
             <ModalFooter>
               <Button
-                id="button"
+                id="deleteSaveUser"
                 disabled={conta !== name}
                 colorScheme="green"
                 mr={3}
@@ -110,7 +112,7 @@ function DeleteModal({ name, id }: dateTable) {
               >
                 Excluir
               </Button>
-              <Button onClick={onClose} colorScheme="red">
+              <Button onClick={onClose} colorScheme="red" id="cancelDeleteUser">
                 Cancelar
               </Button>
             </ModalFooter>

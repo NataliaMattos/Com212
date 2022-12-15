@@ -7,6 +7,7 @@ export interface Manager {
   lastname: string;
   email: string;
   password: string;
+  branch: string;
 }
 
 interface ManagerProviderProps {
@@ -19,6 +20,7 @@ export interface Managers {
   lastname: string;
   email: string;
   password: string;
+  branch: string;
 }
 
 interface ManagerContextData {
@@ -36,7 +38,8 @@ export function ManagerProvider({ children }: ManagerProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/managers").then((response) => {
+    axios.get("http://localhost:3000//managers").then((response) => {
+      console.log(response.data)
       setManagers(response.data);
       setIsLoading(true);
     });

@@ -103,6 +103,7 @@ function Order() {
                 <FormControl isRequired>
                   <FormLabel as="legend">Categorias</FormLabel>
                   <RadioGroup
+                    id="categoryOrder"
                     defaultValue="filme"
                     value={order.category}
                     onChange={(event) => {
@@ -125,7 +126,7 @@ function Order() {
                   <FormControl isRequired>
                     <FormLabel htmlFor="name">Nome</FormLabel>
                     <Input
-                      id="name"
+                      id="nameOrder"
                       max-length="300"
                       borderColor="darkgrey"
                       border="2px"
@@ -143,7 +144,7 @@ function Order() {
                     <Input
                       multiple
                       type="file"
-                      id="name"
+                      id="fileOrder"
                       max-length="300"
                       border="none"
                       onChange={(event) => {
@@ -155,10 +156,10 @@ function Order() {
                 </Box>
               </Flex>
             </SimpleGrid>
-            <Button colorScheme="green" mr={3} type="submit" value="submit">
+            <Button colorScheme="green" mr={3} type="submit" value="submit" id="saveOrder">
               {isWaiting ? <Spinner color="white.500" /> : <div> Salvar</div>}
             </Button>
-            <Button colorScheme="red">Cancelar</Button>
+            <Button colorScheme="red" id="cancelOrder">Cancelar</Button>
           </Box>
         </Flex>
       </form>

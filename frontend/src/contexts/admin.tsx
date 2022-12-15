@@ -7,6 +7,8 @@ export interface Admin {
   lastname: string;
   email: string;
   password: string;
+  branch: string;
+  departament: string;
 }
 
 interface AdminProviderProps {
@@ -19,6 +21,8 @@ export interface Admins {
   lastname: string;
   email: string;
   password: string;
+  branch: string;
+  departament: string;
 }
 
 interface AdminContextData {
