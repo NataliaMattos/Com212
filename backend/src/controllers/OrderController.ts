@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import fs from "fs";
 import { getManager } from "typeorm";
 import { connect } from "../database/index";
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 require("dotenv").config();
 
 connect();
@@ -80,23 +80,20 @@ export class OrderController {
 
   async editFiles(request: Request, response: Response) {
     try {
-      console.log("entrou deleteFiles");
       const id = request.params.id;
       const body = request.body;
-      console.log(id);
 
-      const extension = body.file.split(";")[0].split("/")[1];
-      const base64Data = body.file.split(`base64,`)[1];
-
+      const extension = body?.file.split(";")[0].split("/")[1];
+      const base64Data = body?.file.split(`base64,`)[1];
 
       await manager
         .createQueryBuilder()
         .update('public.demandas')
         .set({
-          filename: body.fileName,
+          filename: body.filename,
           category: body.category,
-          path: base64Data,
-          extension: extension
+          ...base64Data ? {path: base64Data} : {path: body.file},
+          ...base64Data ? {extension: extension} : {extension: body.extension},
         })
         .where(`id = '${id}'`)
         .execute();
@@ -105,7 +102,6 @@ export class OrderController {
         message: 'Demanda editada com sucesso!'
       });
     } catch (error) {
-      console.log(error);
       return response.status(400).send({
         error: "Houve um erro na aplicação",
         message: error,

@@ -102,7 +102,7 @@ const MainUsers: React.FC<MainUsersProps> = ({
                 return (
                   <Tr key={i}>
                     <Td>{elem.name}</Td>
-                    <Td>{elem.lastName}</Td>
+                    <Td>{elem.lastname}</Td>
                     <Td>{elem.email}</Td>
                     <Td>{elem.password}</Td>
                     <Td>
