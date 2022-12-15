@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import NavBar from "./componentes/navbar";
 import { DemandProvider } from "./contexts/demand";
 import { Demand } from "./pages/Demand";
@@ -7,65 +7,42 @@ import Order from "./pages/Order";
 import { Users } from "./pages/Users";
 
 //FUNÇÃO QUE VERIFICA AS ROTAS PRIVADAS
-// function RequireAuth({
-//   children
-// }: {
-//   children: JSX.Element;
-// }) {
-//   const { isLogin } = useContext(AccountContext);
+function RequireAuth({ children,} : { children: JSX.Element}) {
 
-//   useEffect( () => {
-//     console.log(isLogin)
-// }, [isLogin]);
-
-//   if (isLogin === 1) {
-//     return <Navigate to="/Dashboard" replace />;
-//   }
-
-//   // if (isLogin === 2) {
-//   //   return <Navigate to="/login" replace />;
-//   // }
-
-//   return children;
-// }
+  const userId = localStorage.getItem("userId");
+  if (!userId) {
+    return <Navigate to="/login" replace />;
+  }else{
+    return children;
+  }
+  
+}
 
 export function Routess() {
   return (
     <Routes>
       {/* Rotas Públicas */}
       <Route path="/" element={<Login />} />
-      <Route
-        path="/Users"
-        element={
+      <Route path="/login" element={<Login />} />
+      <Route path="/Users"
+        element={<RequireAuth>
           <NavBar>
             <Users />
           </NavBar>
-        }
-      />
-      <Route
-        path="/Order"
-        element={
+        </RequireAuth>} />
+      <Route path="/Order"
+        element={<RequireAuth>
           <NavBar>
             <Order />
           </NavBar>
-        }
-      />
-      <Route
-        path="/login"
-        element={
-          <NavBar>
-            <Login />
-          </NavBar>
-        }
-      />
-      <Route
-        path="/Demand"
-        element={
+        </RequireAuth>} />
+
+      <Route path="/Demand"
+        element={<RequireAuth>
           <NavBar>
             <Demand />
           </NavBar>
-        }
-      />
+        </RequireAuth>} />
     </Routes>
   );
 }

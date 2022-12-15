@@ -26,8 +26,8 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
   const [name, setName] = useState(
     option === "create" ? "" : userEdit[0]?.name
   );
-  const [lastName, setLastName] = useState(
-    option === "create" ? "" : userEdit[0]?.lastName
+  const [lastname, setlastname] = useState(
+    option === "create" ? "" : userEdit[0]?.lastname
   );
   const [email, setEmail] = useState(
     option === "create" ? "" : userEdit[0]?.email
@@ -46,7 +46,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
         .post("http://localhost:3000/user", {
           id: unique_id,
           name: name,
-          lastName: lastName,
+          lastname: lastname,
           email: email,
           password: password,
         })
@@ -75,7 +75,7 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
       axios
         .patch(`http://localhost:3000/user/${id}`, {
           name: name,
-          lastName: lastName,
+          lastname: lastname,
           email: email,
           password: password,
         })
@@ -138,9 +138,9 @@ function UpdateUser({ create, userEdit, option }: dateTable) {
                   borderColor="darkgrey"
                   border="2px"
                   type="text"
-                  value={lastName}
+                  value={lastname}
                   onChange={(event) => {
-                    setLastName(event?.target.value);
+                    setlastname(event?.target.value);
                   }}
                 />
               </FormControl>
